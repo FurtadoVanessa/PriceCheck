@@ -1,26 +1,28 @@
-//
-//  ContentView.swift
-//  PriceCheck
-//
-//  Created by Vanessa Fagundes on 04/08/23.
-//
-
 import SwiftUI
 
-struct ContentView: View {
+struct TabbedView: View {
+    @State private var selectedTab = 0
+    
+    @ObservedObject var viewModel = PriceComparisonViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView(selection: $selectedTab) {
+            ProductPriceComparisonView(viewModel: viewModel)
+                .tabItem {
+                    Image(systemName: "star")
+                    Text("Compare")
+                }
+            ProductListView(viewModel: viewModel)
+                .tabItem {
+                    Image(systemName: "clock")
+                    Text("History")
+                }
         }
-        .padding()
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+struct ProductPriceComparisonView_Previews: PreviewProvider {
+  static var previews: some View {
+      TabbedView()
+  }
 }
